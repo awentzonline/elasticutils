@@ -160,10 +160,14 @@ def split_field_action(s):
     'foo', 'bar'
     >>> split_field_action('foo')
     'foo', None
+    >>> split_field_action('foo__bar__baz')
+    'foo.bar', 'baz'
 
     """
     if '__' in s:
-        return s.rsplit('__', 1)
+        key, action = s.rsplit('__', 1)
+        key = key.replace('__', '.')
+        return key, action
     return s, None
 
 
